@@ -117,6 +117,7 @@ window.addEventListener("DOMContentLoaded", () => {
     //modal.classList.toggle("show");
     // do not allow scrool when modal is up
     document.body.style.overflow = "hidden";
+    clearInterval(modalTimerId);
   }
 
   function closeModal() {
@@ -146,6 +147,22 @@ window.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", (e) => {
     if (e.code === "Escape" && modal.classList.contains("show")) {
       closeModal();
+      document.removeEventListener("scroll", showModalByScroll);
     }
   });
+
+  // call modal window after 10 secs
+
+  const modalTimerId = setTimeout(openModal, 10000);
+
+  function showModalByScroll() {
+    if (
+      window.pageYOffset + document.documentElement.clientHeight >=
+      document.documentElement.scrollHeight
+    ) {
+      openModal();
+      window.removeEventListener("scroll", showModalByScroll);
+    }
+  }
+  window.addEventListener("scroll", showModalByScroll);
 });
