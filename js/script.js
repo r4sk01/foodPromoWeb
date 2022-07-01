@@ -104,4 +104,48 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   setClock(".timer", deadline);
+
+  // Open and Close Promotion Modal Window
+
+  const modalOpenBtns = document.querySelectorAll("[data-modal]"),
+    modal = document.querySelector(".modal"),
+    modalCloseBtn = document.querySelector("[data-close]");
+
+  function openModal() {
+    modal.classList.add("show");
+    modal.classList.remove("hide");
+    //modal.classList.toggle("show");
+    // do not allow scrool when modal is up
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal.classList.add("hide");
+    modal.classList.remove("show");
+    //modal.classList.toggle("show");
+    // turn back scroll
+    document.body.style.overflow = "";
+  }
+
+  modalOpenBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      openModal();
+    });
+  });
+
+  modalCloseBtn.addEventListener("click", () => {
+    closeModal();
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "Escape" && modal.classList.contains("show")) {
+      closeModal();
+    }
+  });
 });
