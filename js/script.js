@@ -243,4 +243,5 @@ window.addEventListener("DOMContentLoaded", () => {
   card01.renderCard();
   card02.renderCard();
   card03.renderCard();
+  //test
 });
