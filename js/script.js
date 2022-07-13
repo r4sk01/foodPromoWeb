@@ -187,7 +187,7 @@ window.addEventListener("DOMContentLoaded", () => {
       this.price = this.price * this.transfer;
     }
 
-    renderCard(parent) {
+    renderCard() {
       const element = document.createElement("div");
       if (this.classes.length === 0) {
         this.element = "menu__item";
