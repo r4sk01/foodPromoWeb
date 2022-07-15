@@ -288,36 +288,33 @@ window.addEventListener("DOMContentLoaded", () => {
 
       form.insertAdjacentElement("afterend", statusMessage);
 
-      const request = new XMLHttpRequest();
-      request.open("POST", "server.php");
-
-      // FormData
-      // to make it work all input should have name="smth"
-      // XMLrequest with formData does not need header set up
-      request.setRequestHeader("Content-type", "application/json");
-
       const formData = new FormData(form);
 
-      const object = {};
+      // const object = {};
+      // formData.forEach(function (value, key) {
+      //   object[key] = value;
+      // });
 
-      formData.forEach(function (value, key) {
-        object[key] = value;
-      });
+      // const json = JSON.stringify(object);
 
-      const json = JSON.stringify(object);
-
-      request.send(json);
-
-      request.addEventListener("load", () => {
-        if (request.status === 200) {
-          console.log(request.response);
+      fetch("server.php", {
+        method: "POST",
+        body: formData,
+        // headers: {
+        //   "Content-type": "application/json",
+        // },
+      })
+        .then((data) => {
+          console.log(data);
           showThanksModal(message.success);
-          form.reset();
           statusMessage.remove();
-        } else {
+        })
+        .catch(() => {
           showThanksModal(message.failure);
-        }
-      });
+        })
+        .finally(() => {
+          form.reset();
+        });
     });
   }
 
